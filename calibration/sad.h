@@ -1,0 +1,2 @@
+__global__ void kernel_sad4(int C,unsigned char* SrcImg_L, unsigned char* SrcImg_R, int dc, int x_center,sad_match_t* matched, int* num_matched);
+void kernel_sad_CPU(int C,unsigned char* SrcImg_L, unsigned char* SrcImg_R, int dc, int x_center,sad_match_t* matched, int* num_matched);

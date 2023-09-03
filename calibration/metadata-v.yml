@@ -1,0 +1,7 @@
+metadata_version: 1
+name: Efficient Stereo Matching on Embedded GPUs with Zero-Means Cross Correlation
+description: This is the the code of accelerating the computation of zncc in stereo
+authors:
+- name: Qiong Chang
+  affiliations:
+  - name: Tokyo Institute of Technology

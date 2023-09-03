@@ -1,0 +1,1 @@
+sudo /usr/local/cuda/bin/nvprof --concurrent-kernels off --unified-memory-profiling off -f -o result/nano/nano-20221207-2.nvvp ./a.out
