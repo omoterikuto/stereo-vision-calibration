@@ -21,13 +21,12 @@
 #include "utils.h"
 
 
-int main_fast(){
+int main_fast(std::string image_name_L, std::string image_name_R){
     std::chrono::system_clock::time_point  start1, start2, start3, start4, start5, start6, start7, start8, end1, end2, end3, end4, end5, end6, end7, end8;
     start8 = std::chrono::high_resolution_clock::now();
-    cv::Mat	image_L = read_images_cpu("input/left.bmp");
-    cv::Mat	image_R = read_images_cpu("input/right.bmp");
-    // cv::Mat	image_L = read_images("data/16IMG_1777.bmp");
-    // cv::Mat	image_R = read_images("data/17IMG_1778.bmp");
+
+    cv::Mat	image_L = read_images_cpu("input/"+image_name_L);
+    cv::Mat	image_R = read_images_cpu("input/"+image_name_R);
     end8 = std::chrono::high_resolution_clock::now();
     std::cout << "ReadFrame(GPU):"<< std::chrono::duration_cast<std::chrono::microseconds>(end8-start8).count() << " usec" << std::endl;
 
@@ -174,8 +173,8 @@ int main_fast(){
     cudaDeviceSynchronize();
 	cudaMemcpy(image_L.data, pDevSrc3, size, cudaMemcpyDeviceToHost);
 	cudaMemcpy(image_R.data, pDevSrc4, size, cudaMemcpyDeviceToHost);
-    cv::imwrite("result/GPU_corrected_image_L.png", image_L);
-    cv::imwrite("result/GPU_corrected_image_R.png", image_R);
+    cv::imwrite("calibration-result/calibrated_image_L.png", image_L);
+    cv::imwrite("calibration-result/calibrated_image_R.png", image_R);
     std::cout << "correction_mat_left_inv:"<< correction_mat_left_inv << std::endl;
     end3 = std::chrono::high_resolution_clock::now();
     std::cout << "Correction(GPU):"<< std::chrono::duration_cast<std::chrono::microseconds>(end3-start3).count() << " usec" << std::endl;
@@ -271,11 +270,11 @@ int main_fast(){
 	cudaMemcpyAsync(image_dz.data, pDevSrc9, size, cudaMemcpyDeviceToHost, stream1);
 
     cudaStreamSynchronize(stream1);
-    cv::imwrite("result/ry_corrected.png", image_ry);
-    cv::imwrite("result/rz_corrected.png", image_rz);
-    cv::imwrite("result/rx_corrected.png", image_rx);
-    cv::imwrite("result/dy_corrected.png", image_dy);
-    cv::imwrite("result/dz_corrected.png", image_dz);
+    cv::imwrite("calibration-result/ry_corrected.png", image_ry);
+    cv::imwrite("calibration-result/rz_corrected.png", image_rz);
+    cv::imwrite("calibration-result/rx_corrected.png", image_rx);
+    cv::imwrite("calibration-result/dy_corrected.png", image_dy);
+    cv::imwrite("calibration-result/dz_corrected.png", image_dz);
 
     end7 = std::chrono::high_resolution_clock::now();
     std::cout << "Apply rx:"<< std::chrono::duration_cast<std::chrono::microseconds>(end7-start7).count() << " usec" << std::endl;
@@ -286,9 +285,9 @@ int main_fast(){
 }
 
 
-int main(){
+int main(int argc, char *argv[]){
     // main_opencv();
-    main_fast();
+    main_fast(argv[1], argv[2]);
     printf("---------------------------\n");
     // main_cpu();
 }

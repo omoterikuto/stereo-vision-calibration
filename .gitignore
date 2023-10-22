@@ -1,3 +1,4 @@
 *.bmp
 .DS_Store
 *.o
+calibration/main

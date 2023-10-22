@@ -16,11 +16,11 @@ build:
 	make build-calibration
 
 run-calibration:
-	calibration/main
+	calibration/main 000000_10_gray_L.bmp 000000_10_gray_R.bmp
 
 run-stereo-vision:
-	stereo-vision/app calibration-result/GPU_corrected_image_L.png calibration-result/GPU_corrected_image_R.png stereo-vision-result/output.png
+	stereo-vision/app calibration-result/000000_10_gray_L.png calibration-result/000000_10_gray_R.png stereo-vision-result/output.png
 
-run: 
+run:
 	make run-calibration
 	make run-stereo-vision
